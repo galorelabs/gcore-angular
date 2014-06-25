@@ -114,10 +114,26 @@ angular.module('gcore', ['ngCookies'])
     		
     		get: function(resource) {
     			return $http.get(
-    				self.endpoint + resource,
+    				endpoint + resource,
     				{headers: self.get_request_headers()}
     			);
-    		},    		
+    		},  
+    		
+    		/****** 
+    		post: function(resource) {
+ 
+    		}, 
+ 
+    		put: function(resource) {
+ 
+    		}, 
+    		
+
+    		delete: function(resource) {
+ 
+    		},     		    		
+    		
+    		*******/
     		
         	
         	/******* API 
