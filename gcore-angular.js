@@ -197,31 +197,21 @@ angular.module('gcore', ['ngCookies'])
             /*** Re-factored Orders ***/
             orders: {
                 list: function( id, params ) {
-                    var url;
+
                     if (id !== null || undefined) {
-                        url = endpoint + "/sales_orders/" + id;
+                        self.list_orders(params);
                     }
                     else {
-                        url = endpoint + "/sales_orders/";
+                        self.show_orders(id, params);
                     }
-                    url += self.url_params(params);
-                    return $http.get(
-                        url, {headers: self.get_request_headers()}
-                    );
                 },
                 update: function ( id, params ) {
-                    var url;
                     if (id !== null || undefined) {
-                        url = endpoint + "/sales_orders/" + id;
+                        self.update_orders(id, params);
                     }
                     else {
-                        url = endpoint + "/sales_orders/";
+                        self.mass_update_orders(params);
                     }
-                    return $http.put(
-                        url,
-                        params['_json'] ? JSON.stringify(params['_json'])  : JSON.stringify(params),
-                        {headers: self.get_request_headers()}
-                    );
                 }
             },
 
@@ -284,14 +274,14 @@ angular.module('gcore', ['ngCookies'])
                     var url;
                     if (id !== null || undefined) {
                         url = endpoint + "/stores/" + params['stores'] + "/products" + id;
+                        url += self.url_params(params);
+                        return $http.get(
+                            url, {headers: self.get_request_headers()}
+                        );
                     }
                     else {
-                        url = endpoint + "/stores/" + params['stores'] + "/products";
+                        self.list_products(params);
                     }
-                    url += self.url_params(params);
-                    return $http.get(
-                        url, {headers: self.get_request_headers()}
-                    );
                 },
                 update: function ( id, params ) {
                     var url;
