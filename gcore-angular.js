@@ -173,8 +173,59 @@ angular.module('gcore', ['ngCookies'])
     			
     			});
     		},
-    		
-    		/*** Orders ***/
+
+            /*** Re-factored Reports ***/
+            reports: {
+                list: function( store, type, params ) {
+                    var url = endpoint + "/stores/" + store + "/reports/" + type;
+                    url += self.url_params(params);
+                    return $http.get(
+                        url, {headers: self.get_request_headers()}
+                    );
+                },
+                update: function ( store, type, params ) {
+                    var url = endpoint + "/stores/" + store + "/reports/" + type;
+                    url += self.url_params(params);
+                    return $http.put(
+                        url,
+                        params['_json'] ? JSON.stringify(params['_json'])  : JSON.stringify(params),
+                        {headers: self.get_request_headers()}
+                    );
+                }
+            },
+
+            /*** Re-factored Orders ***/
+            orders: {
+                list: function( id, params ) {
+                    var url;
+                    if (id !== null || undefined) {
+                        url = endpoint + "/sales_orders/" + id;
+                    }
+                    else {
+                        url = endpoint + "/sales_orders/";
+                    }
+                    url += self.url_params(params);
+                    return $http.get(
+                        url, {headers: self.get_request_headers()}
+                    );
+                },
+                update: function ( id, params ) {
+                    var url;
+                    if (id !== null || undefined) {
+                        url = endpoint + "/sales_orders/" + id;
+                    }
+                    else {
+                        url = endpoint + "/sales_orders/";
+                    }
+                    return $http.put(
+                        url,
+                        params['_json'] ? JSON.stringify(params['_json'])  : JSON.stringify(params),
+                        {headers: self.get_request_headers()}
+                    );
+                }
+            },
+
+            /*** Orders ***/
     		list_orders: function(params) {
     			
     			
@@ -226,9 +277,58 @@ angular.module('gcore', ['ngCookies'])
     					{headers: self.get_request_headers()} 
     			);		
     		},
-    		
-    		
-    		/*** Products ***/
+
+            /*** Re-Factored Products ***/
+            products: {
+                list: function( id, params ) {
+                    var url;
+                    if (id !== null || undefined) {
+                        url = endpoint + "/stores/" + params['stores'] + "/products" + id;
+                    }
+                    else {
+                        url = endpoint + "/stores/" + params['stores'] + "/products";
+                    }
+                    url += self.url_params(params);
+                    return $http.get(
+                        url, {headers: self.get_request_headers()}
+                    );
+                },
+                update: function ( id, params ) {
+                    var url;
+                    if (id !== null || undefined) {
+                        url = endpoint + "/stores/" + params['stores'] + "/products" + id;
+                    }
+                    else {
+                        url = endpoint + "/stores/" + params['stores'] + "/products";
+                    }
+                    return $http.put(
+                        url,
+                        params['_json'] ? JSON.stringify(params['_json'])  : JSON.stringify(params),
+                        {headers: self.get_request_headers()}
+                    );
+                },
+                create: function ( params ) {
+                    var url = endpoint + "/stores/" + params['stores'] + "/products";
+                    return $http.post(
+                        url,
+                        params['_json'] ? JSON.stringify(params['_json'])  : JSON.stringify(params),
+                        {headers: self.get_request_headers()}
+                    );
+                },
+                remove: function ( id, params ) {
+                    var url = null;
+                    if (id !== null || undefined) {
+                        url = endpoint + "/stores/" + params['stores'] + "/products" + id;
+                    }
+                    return $http.delete(
+                        url,
+                        params['_json'] ? JSON.stringify(params['_json'])  : JSON.stringify(params),
+                        {headers: self.get_request_headers()}
+                    );
+                }
+            },
+
+            /*** Products ***/
     		list_products: function(params) {
     			
     			
